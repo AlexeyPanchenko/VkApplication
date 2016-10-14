@@ -1,0 +1,37 @@
+package com.example.infovk;
+
+
+import android.app.Application;
+import android.content.Intent;
+import android.support.annotation.Nullable;
+
+import com.example.infovk.view.activity.MainActivity;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKAccessTokenTracker;
+import com.vk.sdk.VKSdk;
+
+public class MyApplication extends Application {
+
+    VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
+        @Override
+        public void onVKAccessTokenChanged(VKAccessToken oldToken, VKAccessToken newToken) {
+            if(newToken == null){
+                Intent intent = new Intent(MyApplication.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }
+    };
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        vkAccessTokenTracker.startTracking();
+        VKSdk.initialize(this);
+
+    }
+
+
+
+
+}

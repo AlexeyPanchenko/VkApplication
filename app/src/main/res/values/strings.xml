@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">InfoVk</string>
+    <integer name="com_vk_sdk_AppId">5639693</integer>
+</resources>
