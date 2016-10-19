@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.example.infovk.R;
 import com.example.infovk.data.Agera;
 
-import com.example.infovk.data.SimpleUser;
+import com.example.infovk.model.Profile;
 import com.google.android.agera.Receiver;
 import com.google.android.agera.Repository;
 import com.google.android.agera.Result;
@@ -28,14 +28,13 @@ import com.vk.sdk.api.model.VKScopes;
 
 
 
-public class MainActivity extends AppCompatActivity implements Receiver<SimpleUser>, Updatable {
+public class MainActivity extends AppCompatActivity implements Receiver<Profile>, Updatable {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     public static VKAccessToken token;
     private TextView listView;
-    private Repository<Result<SimpleUser>> mResultRepository = new Agera().getRepository();
-    private Updatable mTextValueUpdatable;
+    private Repository<Result<Profile>> mResultRepository = new Agera().getProfileRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +84,9 @@ public class MainActivity extends AppCompatActivity implements Receiver<SimpleUs
     }
 
     @Override
-    public void accept(@NonNull SimpleUser background) {
+    public void accept(@NonNull Profile background) {
         // Set the background bitmap to the background view
 
-        listView.setText(background.getFirst_name() + " " + background.getLast_name());
+        listView.setText(background.getCity().getCityName());
     }
 }
