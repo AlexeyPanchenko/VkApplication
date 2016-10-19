@@ -1,22 +1,22 @@
 package com.example.infovk.data;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.android.agera.Function;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.android.agera.Repositories;
 import com.google.android.agera.Repository;
 import com.google.android.agera.Result;
 import com.google.android.agera.Supplier;
-import com.google.android.agera.Updatable;
 import com.vk.sdk.api.VKApi;
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
-import com.vk.sdk.api.httpClient.VKHttpClient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -28,14 +28,14 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 
 public class Agera{
+    private static final String TAG = Agera.class.getSimpleName();
 
     OkHttpClient client = new OkHttpClient();
-    private Repository<Result<String>> repository;
-    Updatable updatable;
+    private Repository<Result<SimpleUser>> repository;
 
-    private String findUrl() {
+    public String findUrl() {
         VKRequest vkRequest = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, "first_name"));
-        String url1 = "http://api.vk.com/method/users.get?";
+        String url1 = "https://api.vk.com/method/users.get?";
         String url2;
         String url ="";
         try {
@@ -47,9 +47,9 @@ public class Agera{
         return url;
     }
 
-    public Repository<Result<String>> getRepository(){
+    public Repository<Result<SimpleUser>> getRepository(){
 
-        repository = Repositories.repositoryWithInitialValue(Result.<String>absent())
+        repository = Repositories.repositoryWithInitialValue(Result.<SimpleUser>absent())
                 .observe()
                 .onUpdatesPerLoop()
                 .goTo(newSingleThreadExecutor())
@@ -57,24 +57,36 @@ public class Agera{
                     Request request = new Request.Builder()
                             .url(findUrl())
                             .build();
-                    Response response = null;
                     try {
-                        response = client.newCall(request).execute();
+                        Response response = client.newCall(request).execute();
+                        return response;
                     } catch (IOException e) {
                         e.printStackTrace();
+                        return null;
                     }
-                    return response;
                 })
                 .thenTransform(response -> {
-                    ObjectMapper mapper = new ObjectMapper();
-                    Name name = new Name();
                     try {
+                        ObjectMapper mapper = new ObjectMapper();
                         String stringResponse = response.body().string();
-                        name = mapper.readValue(stringResponse, Name.class);
+                        // выделяю из строки JSON объект
+                        JSONObject responseObject = new JSONObject(stringResponse);
+                        Log.d(TAG, "responseObject = " + responseObject);
+                        // выделяю из JSON объекта JSON массив
+                        JSONArray arraySimleUser = responseObject.getJSONArray("response");
+                        Log.d(TAG, "arraySimleUser = " + arraySimleUser);
+                        JSONObject objectMe = arraySimleUser.getJSONObject(0);
+                        Log.d(TAG, "objectMe = " + objectMe);
+                        SimpleUser user = mapper.readValue(objectMe.toString(), SimpleUser.class);
+                        Log.d(TAG, "first_name = " + user.getFirst_name());
+                        return Result.absentIfNull(user);
                     } catch (IOException e) {
                         e.printStackTrace();
+                        return null;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        return null;
                     }
-                    return Result.absentIfNull(name.getFirst_name());
                 })
                 .compile();
 

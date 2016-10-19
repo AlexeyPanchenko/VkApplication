@@ -8,12 +8,10 @@ import com.example.infovk.model.Friend;
 import com.example.infovk.model.Profile;
 import com.example.infovk.model.Relatives;
 import com.example.infovk.model.User;
-import com.example.infovk.view.activity.MainActivity;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.agera.Function;
-import com.google.android.agera.MutableRepository;
 import com.google.android.agera.Repositories;
 import com.google.android.agera.Repository;
 import com.google.android.agera.Result;
@@ -34,28 +32,14 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
-class Name {
-    private String first_name;
-    Name(){}
-    Name(String first_name){
-        this.first_name = first_name;
-    }
-    public String getFirst_name(){
-        return first_name;
-    }
-    public void setFirst_name(String first_name){
-        this.first_name = first_name;
-    }
 
-}
 
 public class AskVk{
     User user;
@@ -86,9 +70,9 @@ public class AskVk{
                     public Result<String> apply(@NonNull VKHttpClient.VKHTTPRequest input) {
 
                         ObjectMapper mapper = new ObjectMapper();
-                        Name name = new Name();
+                        SimpleUser name = new SimpleUser();
                         try {
-                            name = mapper.readValue(findUrl(), Name.class);
+                            name = mapper.readValue(findUrl(), SimpleUser.class);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
