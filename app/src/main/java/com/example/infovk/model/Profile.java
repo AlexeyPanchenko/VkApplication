@@ -1,30 +1,33 @@
 package com.example.infovk.model;
 
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
 
 import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Profile {
 
-    @JsonView
+
     private String first_name, last_name, bdate, university_name, mobile_phone, interests, photo_100;
-    private int relation, sex;
+    private int relation, sex, id;
     private ArrayList<Relatives> relatives;
     private City city;
+    private Counters counters;
+    private boolean online;
 
     public Profile(){}
 
+    public void setId(int id){
+        this.id = id;
+    }
     public void setFirst_name(String first_name){
         this.first_name = first_name;
     }
     public void setLast_name(String last_name){
         this.last_name = last_name;
     }
-    public void setDate(String date){
+    public void setBdate(String date){
         this.bdate = date;
     }
     public void setRelation (int relation){
@@ -51,9 +54,16 @@ public class Profile {
     public void setSex (int sex){
         this.sex = sex;
     }
+    public void setCounters (Counters counters){
+        this.counters = counters;
+    }
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
 
-    public Profile(ArrayList<Relatives> relatives, String first_name, String last_name, String bdate, int relation, City city,
-            String university_name, String mobile_phone, String interests, String photo_100, int sex){
+    public Profile(ArrayList<Relatives> relatives, int id, String first_name, String last_name, String bdate, int relation, City city,
+            String university_name, String mobile_phone, String interests, String photo_100, int sex, Counters counters, boolean online){
+        this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.bdate = bdate;
@@ -65,8 +75,13 @@ public class Profile {
         this.interests = interests;
         this.photo_100 = photo_100;
         this.sex = sex;
+        this.counters = counters;
+        this.online = online;
     }
 
+    public int getId(){
+        return id;
+    }
     public String getFirst_name(){
         return first_name;
     }
@@ -100,5 +115,12 @@ public class Profile {
     public int getSex(){
         return sex;
     }
+    public Counters getCounters(){
+        return counters;
+    }
+    public boolean getOnline(){
+        return online;
+    }
+
 
 }

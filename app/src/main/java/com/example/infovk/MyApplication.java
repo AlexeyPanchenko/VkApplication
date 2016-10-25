@@ -3,7 +3,6 @@ package com.example.infovk;
 
 import android.app.Application;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 
 import com.example.infovk.view.activity.MainActivity;
 import com.vk.sdk.VKAccessToken;

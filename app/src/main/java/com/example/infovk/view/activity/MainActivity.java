@@ -1,55 +1,48 @@
 package com.example.infovk.view.activity;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.infovk.R;
-import com.example.infovk.data.Agera;
-
-import com.example.infovk.model.Profile;
-import com.google.android.agera.Receiver;
-import com.google.android.agera.Repository;
-import com.google.android.agera.Result;
-import com.google.android.agera.Updatable;
+import com.example.infovk.view.fragment.SampleFragment;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
-
 import com.vk.sdk.VKSdk;
-
 import com.vk.sdk.api.VKError;
-
 import com.vk.sdk.api.model.VKScopes;
 
 
 
-public class MainActivity extends AppCompatActivity implements Receiver<Profile>, Updatable {
+
+public class MainActivity extends AppCompatActivity{
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    public static VKAccessToken token;
-    private TextView listView;
-    private Repository<Result<Profile>> mResultRepository = new Agera().getProfileRepository();
+    private static VKAccessToken token;
+    SampleFragment fragmentSample = new SampleFragment();
+    FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         VKSdk.login(this, VKScopes.FRIENDS,VKScopes.WALL, VKScopes.STATUS, VKScopes.OFFERS);
-        listView = (TextView) findViewById(R.id.list_view);
+
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.sampleFragment_contaner,  fragmentSample).commit();
+
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>(){
             @Override
             public void onResult(VKAccessToken res) {
                 token = res;
-                Log.d(TAG, "AccessToken: "+token.accessToken);
+                Log.d(TAG, "AccessToken: "+ token.accessToken);
                 Toast.makeText(getApplicationContext(), "Good", Toast.LENGTH_SHORT).show();
             }
             @Override
@@ -60,33 +53,35 @@ public class MainActivity extends AppCompatActivity implements Receiver<Profile>
         })) {
             super.onActivityResult(requestCode, resultCode, data);
         }
-
     }
-    @Override
+
+
+    /*@Override
     protected void onResume() {
         super.onResume();
         // Start listening to the repository, triggering the flow
-        mResultRepository.addUpdatable(this);
+        friends.addUpdatable(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         // Stop listening to the repository, deactivating it
-        mResultRepository.removeUpdatable(this);
+        friends.removeUpdatable(this);
     }
 
     @Override
     public void update() {
         // Called as the repository is updated
         // If containing a valid bitmap, send to accept below
-        mResultRepository.get().ifSucceededSendTo(this);
+        friends.get().ifSucceededSendTo(this);
     }
 
     @Override
-    public void accept(@NonNull Profile background) {
+    public void accept(@NonNull ArrayList<Profile> background) {
         // Set the background bitmap to the background view
 
-        listView.setText(background.getCity().getCityName());
-    }
+        Toast.makeText(MainActivity.this, background.get(0).getFirst_name(), Toast.LENGTH_SHORT).show();
+        //listView.setText(String.valueOf(background.getOnline()));
+    }*/
 }

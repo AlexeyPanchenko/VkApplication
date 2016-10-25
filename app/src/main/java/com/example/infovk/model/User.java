@@ -4,13 +4,11 @@ package com.example.infovk.model;
 import java.util.ArrayList;
 
 public class User {
-    private int id;
     private Profile profile;
-    private ArrayList<Friend> friends;
+    private ArrayList<Profile> friends;
 
-    public User(int userID, ArrayList<Friend> userFriends, Profile profile) {
-        id = userID;
-        friends = userFriends;
+    public User(ArrayList<Profile> friends, Profile profile) {
+        this.friends = friends;
         this.profile = profile;
     }
 
@@ -21,11 +19,8 @@ public class User {
     public Profile getProfile(){
         return profile;
     }
-    public ArrayList<Friend> getFriends(){
+    public ArrayList<Profile> getFriends(){
         return friends;
-    }
-    public int getID(){
-        return id;
     }
 
 }
