@@ -1,4 +1,31 @@
 <resources>
     <string name="app_name">InfoVk</string>
+    <string name="text_profile_title">Ваш профиль</string>
+    <string name="text_profile_fullName_title">Name: </string>
+    <string name="text_profile_bDate_title">Date: </string>
+    <string name="text_profile_sex_title">Sex: </string>
     <integer name="com_vk_sdk_AppId">5639693</integer>
+    <string name="unknown">unknown</string>
+    <string name="sex_male">male</string>
+    <string name="sex_female">female</string>
+    <string name="text_profile_city_title">City: </string>
+    <string name="text_profile_relation_title">Relation:</string>
+    <string name="relation_isFriend_m">Есть подруга</string>
+    <string name="relation_isFriend_f">Есть друг</string>
+    <string name="relation_noMarried_m">Не женат</string>
+    <string name="relation_noMarried_f">Не замужем</string>
+    <string name="relation_engagement_m">помолвлен</string>
+    <string name="relation_engagement_f">помолвлена</string>
+    <string name="relation_married_f">Замужем</string>
+    <string name="relation_married_m">Женат</string>
+    <string name="relation_hard">Все сложно</string>
+    <string name="relation_activeSearch">В активном поиске</string>
+    <string name="relation_love_f">Влюблена</string>
+    <string name="relation_love_m">Влюблен</string>
+    <string name="text_profile_university_title">University:</string>
+    <string name="text_profile_phone_title">Phone:</string>
+    <string name="text_profile_online">Online</string>
+    <string name="text_profile_offline">Offline</string>
+    <string name="text_profile_interests_title">Interests:</string>
+    <string name="text_profile_relatives_title">Relatives</string>
 </resources>

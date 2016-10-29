@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Profile {
 
 
-    private String first_name, last_name, bdate, university_name, mobile_phone, interests, photo_100;
+    private String first_name, last_name, bdate, university_name, mobile_phone, interests, photo_max_orig;
     private int relation, sex, id;
     private ArrayList<Relatives> relatives;
     private City city;
@@ -48,8 +48,8 @@ public class Profile {
     public void setInterests(String interests){
         this.interests = interests;
     }
-    public void setPhoto_100(String photo_100){
-        this.photo_100 = photo_100;
+    public void setPhoto_max_orig(String photo_max_orig){
+        this.photo_max_orig = photo_max_orig;
     }
     public void setSex (int sex){
         this.sex = sex;
@@ -73,7 +73,7 @@ public class Profile {
         this.university_name = university_name;
         this.mobile_phone = mobile_phone;
         this.interests = interests;
-        this.photo_100 = photo_100;
+        this.photo_max_orig = photo_100;
         this.sex = sex;
         this.counters = counters;
         this.online = online;
@@ -109,8 +109,8 @@ public class Profile {
     public String getInterests(){
         return interests;
     }
-    public String getPhoto_100(){
-        return photo_100;
+    public String getPhoto_max_orig(){
+        return photo_max_orig;
     }
     public int getSex(){
         return sex;

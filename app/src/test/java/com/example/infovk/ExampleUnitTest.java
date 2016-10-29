@@ -50,7 +50,7 @@ public class ExampleUnitTest {
         assertEquals(education, ptester.getUniversity_name());
         assertEquals(phone, ptester.getMobile_phone());
         assertEquals(hobbies, ptester.getInterests());
-        assertEquals(foto, ptester.getPhoto_100());
+        assertEquals(foto, ptester.getPhoto_max_orig());
         assertEquals(sex, ptester.getSex());
 
         String firstName1 = "Иван1";
@@ -80,7 +80,7 @@ public class ExampleUnitTest {
         assertNotEquals(ptester1.getUniversity_name(), ptester.getUniversity_name());
         assertNotEquals(ptester1.getMobile_phone(), ptester.getMobile_phone());
         assertNotEquals(ptester1.getInterests(), ptester.getInterests());
-        assertNotEquals(ptester1.getPhoto_100(), ptester.getPhoto_100());
+        assertNotEquals(ptester1.getPhoto_max_orig(), ptester.getPhoto_max_orig());
 
 
         ArrayList<Profile> friends = new ArrayList<>();

@@ -34,7 +34,7 @@ public class Agera{
 
     public String findUrlUserProfile() {
         try {
-            VKRequest vkRequest = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, "id, first_name, counters, online, last_name, bdate, city , relation, relatives, education, contacts, interests, sex, photo_100"));
+            VKRequest vkRequest = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, "id, first_name, counters, online, last_name, bdate, city , relation, relatives, education, contacts, interests, sex, photo_max_orig"));
             String url1 = "https://api.vk.com/method/users.get?";
             String url2 = vkRequest.getPreparedRequest().getQuery();
             String url = url1 + url2;
@@ -47,7 +47,7 @@ public class Agera{
 
     public String findUrlFriends() {
         try {
-            VKRequest vkRequest = VKApi.friends().get(VKParameters.from(VKApiConst.FIELDS, "id, first_name, counters, online, last_name, bdate, city , relation, relatives, education, contacts, interests, sex, photo_100"));
+            VKRequest vkRequest = VKApi.friends().get(VKParameters.from(VKApiConst.FIELDS, "id, first_name, counters, online, last_name, bdate, city , relation, relatives, education, contacts, interests, sex, photo_max_orig"));
             String url1 = "https://api.vk.com/method/friends.get?";
             String url2 = vkRequest.getPreparedRequest().getQuery();
             String url = url1 + url2;

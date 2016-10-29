@@ -1,13 +1,13 @@
 package com.example.infovk.view.activity;
 
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 import com.example.infovk.R;
-import com.example.infovk.view.fragment.SampleFragment;
+import com.example.infovk.view.fragment.MainFragment;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
@@ -17,13 +17,12 @@ import com.vk.sdk.api.model.VKScopes;
 
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements MainFragment.onSomeEventListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private static VKAccessToken token;
-    SampleFragment fragmentSample = new SampleFragment();
-    FragmentTransaction fragmentTransaction;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +30,14 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         VKSdk.login(this, VKScopes.FRIENDS,VKScopes.WALL, VKScopes.STATUS, VKScopes.OFFERS);
 
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.sampleFragment_contaner,  fragmentSample).commit();
-
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.fragment_main_container);
+        if(fragment == null){
+            fragment = new MainFragment();
+            fm.beginTransaction()
+                    .add(R.id.fragment_main_container, fragment)
+                    .commit();
+        }
     }
 
     @Override
@@ -53,6 +57,12 @@ public class MainActivity extends AppCompatActivity{
         })) {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void someEvent() {
+        Intent intent = new Intent(this, ShowProfileActivity.class);
+        startActivity(intent);
     }
 
 

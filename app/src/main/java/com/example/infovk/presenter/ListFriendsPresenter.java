@@ -28,7 +28,7 @@ public class ListFriendsPresenter extends MvpBasePresenter<ListFriendsView> impl
             ArrayList<String> photos = new ArrayList<>();
             for (int i = 0; i < friends.size(); i++) {
                 names.add(friends.get(i).getFirst_name() + " " + friends.get(i).getLast_name());
-                photos.add(friends.get(i).getPhoto_100());
+                photos.add(friends.get(i).getPhoto_max_orig());
             }
             getView().showListFriends(names, photos);
         }else {
