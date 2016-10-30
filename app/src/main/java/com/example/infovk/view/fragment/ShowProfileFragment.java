@@ -71,7 +71,6 @@ public class ShowProfileFragment extends MvpFragment<MyProfileView, MyProfilePre
     @Override
     public void showMyProfile(Profile profile) {
         setWigets(profile);
-
     }
 
     public void setWigets(Profile profile){

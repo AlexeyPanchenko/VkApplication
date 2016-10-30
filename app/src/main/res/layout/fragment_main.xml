@@ -15,5 +15,5 @@
         android:textSize="24sp"
         android:text="Добро пожаловать!"
         android:layout_centerVertical="true"
-        android:background="@drawable/frame_for_button"/>
+        android:background="@drawable/button"/>
 </RelativeLayout>
