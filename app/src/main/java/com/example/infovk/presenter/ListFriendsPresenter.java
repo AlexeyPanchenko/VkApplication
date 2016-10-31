@@ -13,10 +13,14 @@ public class ListFriendsPresenter extends MvpBasePresenter<ListFriendsView> impl
 
     private Agera agera = new Agera();
     private Repository<Result<ArrayList<Profile>>> repository;
+    private ArrayList<Integer> id;
 
     public void showMyFriends(){
         repository = agera.getFriendsRepository();
         repository.addUpdatable(this);
+    }
+    public int getId(int i){
+        return id.get(i);
     }
 
     @Override
@@ -26,11 +30,13 @@ public class ListFriendsPresenter extends MvpBasePresenter<ListFriendsView> impl
             ArrayList<Profile> friends = friendsResult.get();
             ArrayList<String> names = new ArrayList<>();
             ArrayList<String> photos = new ArrayList<>();
+            id = new ArrayList<>();
             for (int i = 0; i < friends.size(); i++) {
                 names.add(friends.get(i).getFirst_name() + " " + friends.get(i).getLast_name());
                 photos.add(friends.get(i).getPhoto_max_orig());
+                id.add(friends.get(i).getId());
             }
-            getView().showListFriends(names, photos);
+            getView().showListFriends(id, names, photos);
         }else {
             return;
         }

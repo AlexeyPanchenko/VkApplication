@@ -1,5 +1,6 @@
 package com.example.infovk.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,29 +13,35 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.infovk.R;
+import com.example.infovk.model.Profile;
 import com.example.infovk.presenter.ListFriendsPresenter;
+import com.example.infovk.presenter.MyFriendsProfilePresenter;
 import com.example.infovk.view.ListFriendsView;
+import com.example.infovk.view.MyFriendsProfilesView;
+import com.example.infovk.view.activity.ShowProfileFriendsActivity;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 
-public class ShowFriendsFragment extends MvpFragment<ListFriendsView, ListFriendsPresenter> implements ListFriendsView{
+public class ShowFriendsFragment extends MvpFragment<MyFriendsProfilesView, MyFriendsProfilePresenter> implements MyFriendsProfilesView{
 
     private RecyclerView recyclerView;
     private FriendsAdapter fAdapter;
 
+
+
     @Override
-    public void showListFriends(ArrayList<String> friendsNames, ArrayList<String> photos) {
-        fAdapter = new FriendsAdapter(friendsNames, photos);
+    public MyFriendsProfilePresenter createPresenter() {
+        return new MyFriendsProfilePresenter();
+    }
+    @Override
+    public void showProfilesFriends(ArrayList<Profile> friends) {
+        fAdapter = new FriendsAdapter(friends);
         recyclerView.setAdapter(fAdapter);
     }
 
-    @Override
-    public ListFriendsPresenter createPresenter() {
-        return new ListFriendsPresenter();
-    }
 
     @Nullable
     @Override
@@ -43,6 +50,8 @@ public class ShowFriendsFragment extends MvpFragment<ListFriendsView, ListFriend
 
         recyclerView = (RecyclerView) view.findViewById(R.id.fragment_show_friends_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
 
         return view;
     }
@@ -55,8 +64,9 @@ public class ShowFriendsFragment extends MvpFragment<ListFriendsView, ListFriend
 
     private class FriendsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        ImageView friendPhoto;
-        TextView friendName;
+        private Profile fProfile;
+        private ImageView friendPhoto;
+        private TextView friendName;
 
         public FriendsHolder(View itemView) {
             super(itemView);
@@ -67,21 +77,22 @@ public class ShowFriendsFragment extends MvpFragment<ListFriendsView, ListFriend
 
         @Override
         public void onClick(View v) {
-
+            Intent intent = ShowProfileFriendsActivity.newIntent(getActivity(), fProfile.getId());
+            startActivity(intent);
         }
 
-        public void bind(String name, String photo) {
-            friendName.setText(name);
-            Picasso.with(getActivity()).load(photo).into(friendPhoto);
+        public void bind(Profile friend) {
+            fProfile = friend;
+            friendName.setText(fProfile.getFirst_name() + " " + fProfile.getLast_name());
+            Picasso.with(getActivity()).load(fProfile.getPhoto_max_orig()).into(friendPhoto);
         }
     }
 
-    private class FriendsAdapter extends RecyclerView.Adapter<FriendsHolder>{
+    private class FriendsAdapter extends RecyclerView.Adapter<FriendsHolder> {
 
-        private ArrayList<String> fNames, fPhotos;
-        public FriendsAdapter(ArrayList<String> names, ArrayList<String> photos){
-            fNames = names;
-            fPhotos = photos;
+        private ArrayList<Profile> friendsProfiles;
+        public FriendsAdapter(ArrayList<Profile> fProfile){
+            friendsProfiles = fProfile;
         }
 
         @Override
@@ -93,14 +104,13 @@ public class ShowFriendsFragment extends MvpFragment<ListFriendsView, ListFriend
 
         @Override
         public void onBindViewHolder(FriendsHolder holder, int position) {
-            String name = fNames.get(position);
-            String photo = fPhotos.get(position);
-            holder.bind(name, photo);
+            Profile friend = friendsProfiles.get(position);
+            holder.bind(friend);
         }
 
         @Override
         public int getItemCount() {
-            return fNames.size();
+            return friendsProfiles.size();
         }
     }
 }

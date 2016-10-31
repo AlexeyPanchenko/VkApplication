@@ -92,7 +92,6 @@ public class Agera{
                         Log.d(TAG, "objectMe = " + objectMe);
 
                         Profile profile = mapper.readValue(objectMe.toString(), Profile.class);
-                        Log.d(TAG, "cityName = " + String.valueOf(profile.getOnline()));
                         return Result.absentIfNull(profile);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -145,8 +144,6 @@ public class Agera{
                             Profile friendProfile = mapper.readValue(conreteItem.toString(), Profile.class);
                             friends.add(friendProfile);
                         }
-                        Log.d(TAG, "5 friend 1 relative name = " + friends.get(1).getRelatives().get(0).getName());
-
                         return Result.absentIfNull(friends);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -160,7 +157,7 @@ public class Agera{
         return repository;
     }
 
-    /*Подписаться на обновления addUpdatable!  определить метод update желательно в презенторе добавил для коммита*/
+    /**Подписаться на обновления addUpdatable!  определить метод update желательно в презенторе*/
 
 
 }

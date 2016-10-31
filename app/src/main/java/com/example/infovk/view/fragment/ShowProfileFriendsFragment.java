@@ -1,37 +1,71 @@
 package com.example.infovk.view.fragment;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.infovk.R;
 import com.example.infovk.model.Profile;
-import com.example.infovk.presenter.MyProfilePresenter;
-import com.example.infovk.view.MyProfileView;
+import com.example.infovk.presenter.MyFriendsProfilePresenter;
+import com.example.infovk.view.MyFriendsProfilesView;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ShowProfileFragment extends MvpFragment<MyProfileView, MyProfilePresenter> implements MyProfileView {
 
-    TextView textTitle, fullNameTitle, bDateTitle, sexTitle, cityTitle, relationTitle, universityNameTitle, phoneTitle
+public class ShowProfileFriendsFragment extends MvpFragment<MyFriendsProfilesView, MyFriendsProfilePresenter>
+        implements MyFriendsProfilesView {
+
+    private static final String ARG_FRIEND_ID = "friends_id";
+
+    private Profile profile;
+    int friendId;
+    private TextView textTitle, fullNameTitle, bDateTitle, sexTitle, cityTitle, relationTitle, universityNameTitle, phoneTitle
             , interestsTitle, relativesTitle;
-    TextView online, fullName, bDate, sex, city, relation, universityName, phone, interests;
-    ImageView photo;
-    TextView list;
+    private TextView online, fullName, bDate, sex, city, relation, universityName, phone, interests;
+    private ImageView photo;
+    private TextView list;
+
+    public static ShowProfileFriendsFragment newInstance(int id){
+        Bundle arguments = new Bundle();
+        arguments.putInt(ARG_FRIEND_ID, id);
+        ShowProfileFriendsFragment showProfileFragment = new ShowProfileFriendsFragment();
+        showProfileFragment.setArguments(arguments);
+        return showProfileFragment;
+    }
+
+    @Override
+    public MyFriendsProfilePresenter createPresenter() {
+        return new MyFriendsProfilePresenter();
+    }
+
+    @Override
+    public void showProfilesFriends(ArrayList<Profile> friends) {
+        for (int i = 0; i < friends.size(); i++) {
+            if(friends.get(i).getId() == friendId){
+                profile = friends.get(i);
+                setWigets(profile);
+            }
+        }
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        friendId = getArguments().getInt(ARG_FRIEND_ID);
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_show_profile, container, false);
+
         list = (TextView) view.findViewById(R.id.list_profile);
 
         textTitle = (TextView) view.findViewById(R.id.text_profile_title);
@@ -55,27 +89,20 @@ public class ShowProfileFragment extends MvpFragment<MyProfileView, MyProfilePre
         phone = (TextView) view.findViewById(R.id.text_profile_phone);
         interests = (TextView) view.findViewById(R.id.text_profile_interests);
         photo = (ImageView) view.findViewById(R.id.profile_photo);
+
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.showProfile();
-    }
-
-    @Override
-    public MyProfilePresenter createPresenter() {
-        return new MyProfilePresenter();
-    }
-
-    @Override
-    public void showMyProfile(Profile profile) {
-        setWigets(profile);
+        presenter.showMyFriends();
     }
 
     public void setWigets(Profile profile){
-        textTitle.setText(R.string.text_profile_title);
+
+        textTitle.setText(profile.getFirst_name());
+
         fullNameTitle.setText(R.string.text_profile_fullName_title);
         bDateTitle.setText(R.string.text_profile_bDate_title);
         sexTitle.setText(R.string.text_profile_sex_title);
@@ -165,4 +192,6 @@ public class ShowProfileFragment extends MvpFragment<MyProfileView, MyProfilePre
             list.setText(textRelatives);
         }else {return;}
     }
+
+
 }

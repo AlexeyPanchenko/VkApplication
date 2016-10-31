@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public interface ListFriendsView extends MvpView {
 
-    void showListFriends(ArrayList<String> friendsNames, ArrayList<String> photos);
+    void showListFriends(ArrayList<Integer> friendsId, ArrayList<String> friendsNames, ArrayList<String> photos);
 
 }

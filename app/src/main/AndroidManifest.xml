@@ -25,6 +25,9 @@
         <activity
             android:name=".view.activity.ShowProfileActivity">
         </activity>
+        <activity
+            android:name=".view.activity.ShowProfileFriendsActivity">
+        </activity>
     </application>
 
 </manifest>
