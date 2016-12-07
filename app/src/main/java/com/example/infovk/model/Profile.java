@@ -13,7 +13,6 @@ public class Profile {
     private int relation, sex, id;
     private ArrayList<Relatives> relatives;
     private City city;
-    private Counters counters;
     private boolean online;
 
     public Profile(){}
@@ -54,15 +53,12 @@ public class Profile {
     public void setSex (int sex){
         this.sex = sex;
     }
-    public void setCounters (Counters counters){
-        this.counters = counters;
-    }
     public void setOnline(boolean online) {
         this.online = online;
     }
 
     public Profile(ArrayList<Relatives> relatives, int id, String first_name, String last_name, String bdate, int relation, City city,
-            String university_name, String mobile_phone, String interests, String photo_100, int sex, Counters counters, boolean online){
+            String university_name, String mobile_phone, String interests, String photo_100, int sex, boolean online){
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -75,7 +71,6 @@ public class Profile {
         this.interests = interests;
         this.photo_max_orig = photo_100;
         this.sex = sex;
-        this.counters = counters;
         this.online = online;
     }
 
@@ -114,9 +109,6 @@ public class Profile {
     }
     public int getSex(){
         return sex;
-    }
-    public Counters getCounters(){
-        return counters;
     }
     public boolean getOnline(){
         return online;

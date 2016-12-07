@@ -3,7 +3,6 @@ package com.example.infovk.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,9 +13,7 @@ import android.widget.TextView;
 
 import com.example.infovk.R;
 import com.example.infovk.model.Profile;
-import com.example.infovk.presenter.ListFriendsPresenter;
 import com.example.infovk.presenter.MyFriendsProfilePresenter;
-import com.example.infovk.view.ListFriendsView;
 import com.example.infovk.view.MyFriendsProfilesView;
 import com.example.infovk.view.activity.ShowProfileFriendsActivity;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
@@ -31,7 +28,6 @@ public class ShowFriendsFragment extends MvpFragment<MyFriendsProfilesView, MyFr
     private FriendsAdapter fAdapter;
 
 
-
     @Override
     public MyFriendsProfilePresenter createPresenter() {
         return new MyFriendsProfilePresenter();
@@ -42,6 +38,11 @@ public class ShowFriendsFragment extends MvpFragment<MyFriendsProfilesView, MyFr
         recyclerView.setAdapter(fAdapter);
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Nullable
     @Override

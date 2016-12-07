@@ -58,6 +58,7 @@ public class ShowProfileFriendsFragment extends MvpFragment<MyFriendsProfilesVie
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         friendId = getArguments().getInt(ARG_FRIEND_ID);
     }
 

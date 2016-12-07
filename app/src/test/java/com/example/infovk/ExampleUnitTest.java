@@ -2,17 +2,16 @@ package com.example.infovk;
 
 
 import com.example.infovk.model.City;
-import com.example.infovk.model.Counters;
 import com.example.infovk.model.Profile;
 import com.example.infovk.model.Relatives;
 import com.example.infovk.model.User;
 
 import org.junit.Test;
 
-
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
@@ -37,9 +36,8 @@ public class ExampleUnitTest {
         String foto = "url.0";
         int sex = 1;
         boolean online = true;
-        Counters counters = new Counters(45);
 
-        Profile ptester = new Profile(relatives, id, firstName, lastName, date, userRelation, city, education, phone, hobbies, foto, sex, counters, online);
+        Profile ptester = new Profile(relatives, id, firstName, lastName, date, userRelation, city, education, phone, hobbies, foto, sex, online);
         assertEquals(relatives, ptester.getRelatives());
         assertEquals(id, ptester.getId());
         assertEquals(firstName, ptester.getFirst_name());
@@ -68,9 +66,8 @@ public class ExampleUnitTest {
         relatives.add(new Relatives("Дед1", 1231, "Вас1"));
         relatives.add(new Relatives("дочь1", 11121, "Галя1"));
         boolean online1 = true;
-        Counters counters1 = new Counters(25);
 
-        Profile ptester1 = new Profile(relatives1, id1, firstName1, lastName1, date1, userRelation1, city1, education1, phone1, hobbies1, foto1, sex1, counters1, online1);
+        Profile ptester1 = new Profile(relatives1, id1, firstName1, lastName1, date1, userRelation1, city1, education1, phone1, hobbies1, foto1, sex1, online1);
         assertNotEquals(ptester1.getFirst_name(), ptester.getFirst_name());
         assertNotEquals(ptester1.getLast_name(), ptester.getLast_name());
         assertNotEquals(ptester1.getDate(), ptester.getDate());

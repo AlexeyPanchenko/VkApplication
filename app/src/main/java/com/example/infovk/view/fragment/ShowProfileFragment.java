@@ -6,9 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.infovk.R;
@@ -27,6 +25,12 @@ public class ShowProfileFragment extends MvpFragment<MyProfileView, MyProfilePre
     TextView online, fullName, bDate, sex, city, relation, universityName, phone, interests;
     ImageView photo;
     TextView list;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Nullable
     @Override

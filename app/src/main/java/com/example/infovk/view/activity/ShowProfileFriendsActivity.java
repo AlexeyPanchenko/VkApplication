@@ -4,19 +4,16 @@ package com.example.infovk.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.example.infovk.R;
 import com.example.infovk.model.Profile;
 import com.example.infovk.presenter.MyFriendsProfilePresenter;
 import com.example.infovk.view.MyFriendsProfilesView;
-import com.example.infovk.view.fragment.ShowFriendsFragment;
 import com.example.infovk.view.fragment.ShowProfileFriendsFragment;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 

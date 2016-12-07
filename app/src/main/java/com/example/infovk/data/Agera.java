@@ -1,7 +1,5 @@
 package com.example.infovk.data;
 
-import android.util.Log;
-
 import com.example.infovk.model.Profile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.agera.Repositories;
@@ -34,7 +32,7 @@ public class Agera{
 
     public String findUrlUserProfile() {
         try {
-            VKRequest vkRequest = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, "id, first_name, counters, online, last_name, bdate, city , relation, relatives, education, contacts, interests, sex, photo_max_orig"));
+            VKRequest vkRequest = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, "id, first_name, online, last_name, bdate, city , relation, relatives, education, contacts, interests, sex, photo_max_orig"));
             String url1 = "https://api.vk.com/method/users.get?";
             String url2 = vkRequest.getPreparedRequest().getQuery();
             String url = url1 + url2;
@@ -47,7 +45,7 @@ public class Agera{
 
     public String findUrlFriends() {
         try {
-            VKRequest vkRequest = VKApi.friends().get(VKParameters.from(VKApiConst.FIELDS, "id, first_name, counters, online, last_name, bdate, city , relation, relatives, education, contacts, interests, sex, photo_max_orig"));
+            VKRequest vkRequest = VKApi.friends().get(VKParameters.from(VKApiConst.FIELDS, "id, first_name, online, last_name, bdate, city , relation, relatives, education, contacts, interests, sex, photo_max_orig"));
             String url1 = "https://api.vk.com/method/friends.get?";
             String url2 = vkRequest.getPreparedRequest().getQuery();
             String url = url1 + url2;
@@ -80,17 +78,13 @@ public class Agera{
                     try {
                         ObjectMapper mapper = new ObjectMapper();
                         String stringResponse = response.body().string();
-                        Log.d(TAG, "stringResponse = " + stringResponse);
                         // выделяю из строки JSON объект
                         JSONObject responseObject = new JSONObject(stringResponse);
-                        Log.d(TAG, "responseObject = " + responseObject);
-                        // выделяю из JSON объекта JSON массив
+                        // выделяю из JSON объекта JSON массив response
                         JSONArray arrayProfile = responseObject.getJSONArray("response");
-                        Log.d(TAG, "arrayProfile = " + arrayProfile);
-
+                        // из массива получаю 0 объект
                         JSONObject objectMe = arrayProfile.getJSONObject(0);
-                        Log.d(TAG, "objectMe = " + objectMe);
-
+                        // парс через jackson
                         Profile profile = mapper.readValue(objectMe.toString(), Profile.class);
                         return Result.absentIfNull(profile);
                     } catch (IOException e) {
@@ -128,14 +122,11 @@ public class Agera{
 
                         ObjectMapper mapper = new ObjectMapper();
                         String stringResponse = response.body().string();
-                        Log.d(TAG, "stringResponse FRIENDS = " + stringResponse);
                         // выделяю из строки JSON объект
                         JSONObject responseObject = new JSONObject(stringResponse);
-                        Log.d(TAG, "responseObject FRIENDS = " + responseObject);
-                        // выделяю из JSON объекта JSON массив
+                        // выделяю из JSON объекта JSON объект
                         JSONObject objectResponse = responseObject.getJSONObject("response");
-                        Log.d(TAG, "objectResponse FRIENDS = " + objectResponse);
-
+                        // получаю массив
                         JSONArray itemsArray = objectResponse.getJSONArray("items");
                         ArrayList<Profile> friends = new ArrayList<>();
 
@@ -157,7 +148,7 @@ public class Agera{
         return repository;
     }
 
-    /**Подписаться на обновления addUpdatable!  определить метод update желательно в презенторе*/
+    /**Подписаться на обновления addUpdatable!  определить метод update в презенторе*/
 
 
 }
